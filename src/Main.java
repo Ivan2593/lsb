@@ -35,12 +35,12 @@ class ImageProcess{
         for(byte b : txt){
             for(int k=7;k>=0;k--){
                 Color c = new Color(img.getRGB(j,i));
-                byte blue = (byte)c.getBlue();
-                int red = c.getRed();
+                byte red = (byte)c.getRed();
+                int blue = c.getBlue();
                 int green = c.getGreen();
                 int bitVal = (b >>> k) & 1;
-                blue = (byte)((blue & 0xFE)| bitVal);
-                Color newColor = new Color(red,green,(blue & 0xFF));
+                red = (byte)((red & 0xFE)| bitVal);
+                Color newColor = new Color((red & 0xFF),green,blue);
                 img.setRGB(j,i,newColor.getRGB());
                 j++;
             }
@@ -101,8 +101,8 @@ class ImageProcess{
         for(int l=0;l<size;l++){
             for(int k=0 ; k<8 ; k++){
                 Color c = new Color(img.getRGB(j,i));
-                byte blue = (byte)c.getBlue();
-                hiddenBytes[l] = (byte) ((hiddenBytes[l]<<1)|(blue&1));
+                byte red = (byte)c.getRed();
+                hiddenBytes[l] = (byte) ((hiddenBytes[l]<<1)|(red&1));
                 j++;
             }
             i++;
